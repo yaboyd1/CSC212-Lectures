@@ -42,13 +42,13 @@ What are Preconditions and Postconditions?
 	The postcondition statement indicates what must be true, or what the
 	state must be, once the program completes its work. Here is an example:
 
-	>void write_sqrt(double x)
-	>// Precondition: x >= 0
-	>// Postcondition: The square root of x has been written to the
-	>// standard output.
-	>{
-	>	// Code...
-	>}
+	void write_sqrt(double x)
+	// Precondition: x >= 0
+	// Postcondition: The square root of x has been written to the
+	// standard output.
+	{
+		// Code...
+	}
 
 	The precondition and postcondition are pretty much like the documentation
 	of the program. They appear as comments in a program. They are usually
@@ -56,14 +56,14 @@ What are Preconditions and Postconditions?
 	even crash a computer. It is important to ensure that a function is called 
 	with its proper preconditions and that it returns the proper postconditions.  
 
-	>void write_sqrt(double x)
-	>// Precondition: x >= 0
-	>// Postcondition: The square root of x has been written to the
-	>// standard output.
-	>{
-	>	assert(x >= 0);
-	>	// Code...
-	>}
+	void write_sqrt(double x)
+	// Precondition: x >= 0
+	// Postcondition: The square root of x has been written to the
+	// standard output.
+	{
+		assert(x >= 0);
+		// Code...
+	}
 
 Running Time Analysis - Big O
 -----------------------------
@@ -87,20 +87,20 @@ Running Time Analysis - Big O
 	iterator. So, at the very least a for loop has 2n+1 processes and is O(n).
 
 
-	>for(i = 0; i < strlen(str); i++) {
-	>	c = str[i];
-	>	cout << c;
-	>}
+for(i = 0; i < strlen(str); i++) {
+	c = str[i];
+	cout << c;
+}
 
 	This is an example of O(n^2) since in the for loop, another for loop is
 	running. (strlen() is essentially a for loop that measures the length of a
 	string of chars). To improve this we can do:
 
-	>n = strlen(str);
-	>for(i = 0; i < n; i++) {
-	>	c = str[i];
-	>	cout << c;
-	>} 
+n = strlen(str);
+for(i = 0; i < n; i++) {
+	c = str[i];
+	cout << c;
+} 
 
 	This is now faster since it is O(n).
 
