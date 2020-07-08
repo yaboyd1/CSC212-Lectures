@@ -42,3 +42,4 @@ Memory Release and the Delete Function
 	compiler does a good job releasing that memory. However, if a dynamic
 	array is constructed using the 'new' method, then it will remain allocated
 	until the 'delete' function is used to release them.
+

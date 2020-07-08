@@ -98,3 +98,5 @@ Failure of the new Operator
 	bad_alloc error. This basically means that no more space is left to
 	allocate memory. A good method is garbage collection by using the 'delete'
 	Operator.
+
+
