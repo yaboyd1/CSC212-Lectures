@@ -22,4 +22,3 @@ Time Analysis of the Bag Class
 		be linear in its worst case, it the size of the dynamic array is
 		exhausted. In this case, a new array has to be constructed, with a for
 		loop being used to copy over values from the first array.
-	

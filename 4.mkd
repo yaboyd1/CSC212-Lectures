@@ -29,5 +29,3 @@ Static Variables
 
 	This disallows us to have bags with different capacities, however. This is
 	the reason why these types of bags are known as *static bags*. 
-
-
