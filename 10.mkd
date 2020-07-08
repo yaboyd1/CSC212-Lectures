@@ -1,5 +1,5 @@
-Chapter 10
-----------
+Binary Trees
+------------
 
 Binary Trees are special data stuctures that are non-linear. This essentially
 means that trees do not follow the standard left-to-right method of data
