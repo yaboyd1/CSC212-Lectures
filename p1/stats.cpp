@@ -1,4 +1,5 @@
 #include <cassert> // Provides assert()
+#include <climits> // Provides INT_MIN and INT_MAX
 #include "stats.h"
 
 namespace main_savitch_2C {
@@ -16,6 +17,8 @@ namespace main_savitch_2C {
 	}
 	void statistician::reset() {
 		total = count = 0;
+		tinyest = INT_MIN;
+		largest = INT_MAX;
 	}
     // CONSTANT MEMBER FUNCTIONS
 	int statistician::length() const {
