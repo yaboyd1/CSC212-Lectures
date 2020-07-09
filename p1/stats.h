@@ -66,6 +66,7 @@ namespace main_savitch_2C
     public:
         // CONSTRUCTOR
         statistician();
+        statistician(int c, double t, double min, double max);
         // MODIFICATION MEMBER FUNCTIONS
         void next(double r);
         void reset();

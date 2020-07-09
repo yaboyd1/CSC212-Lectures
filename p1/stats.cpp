@@ -6,6 +6,12 @@ namespace main_savitch_2C {
 	statistician::statistician() {
 		reset();
 	}
+	statistician::statistician(int c, double t, double min, double max) {
+		count = c;
+		total = t;
+		tinyest = min;
+		largest = max;
+	}
     // MODIFICATION MEMBER FUNCTIONS
 	void statistician::next(double r) {
 		if (r < tinyest)
