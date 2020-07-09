@@ -47,15 +47,19 @@ namespace main_savitch_2C {
 	}
     // FRIEND FUNCTIONS
 	statistician operator +(const statistician& s1, const statistician& s2) {
+		if (s1.count == 0) return s2;
+		if (s1.count == 0) return s1;
 		return statistician(s1.count + s2.count, s1.total + s2.total, 
 			s1.tinyest < s2.tinyest ? s1.tinyest : s2.tinyest,
 			s1.largest > s2.largest ? s1.largest : s2.largest);
 	}
 	statistician operator *(double scale, const statistician& s) {
+		if (s.count == 0) return s;
 		return statistician(scale * s.count, scale * s.total, scale * s.tinyest, scale * s.largest);
 	}
 
 	bool operator ==(const statistician& s1, const statistician& s2) {
+		if (s1.length() == 0 && s2.length() == 0) return true;
 		return s1.length() == s2.length() && s1.sum() == s2.sum() 
 			&& s1.minimum() == s2.minimum() 
 			&& s1.maximum() == s2.maximum();
