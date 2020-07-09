@@ -14,10 +14,9 @@ namespace main_savitch_2C {
 	}
     // MODIFICATION MEMBER FUNCTIONS
 	void statistician::next(double r) {
-		if (r < tinyest)
-			tinyest = r;
-		if (r > largest)
-			largest = r;
+		if (count == 0) tinyest = largest = r;
+		if (r < tinyest) tinyest = r;
+		if (r > largest) largest = r;
 		total += r;
 		++count;
 	}
