@@ -55,8 +55,9 @@
 // VALUE SEMANTICS for the statistician class:
 // Assignments and the copy constructor may be used with statistician objects.
 
-#ifndef STATS_H     // Prevent duplicate definition
+#ifndef STATS_H    // Prevent duplicate definition
 #define STATS_H
+#include <climits> // Provides INT_MIN and INT_MAX
 #include <iostream>
 
 namespace main_savitch_2C
@@ -65,8 +66,8 @@ namespace main_savitch_2C
     {
     public:
         // CONSTRUCTOR
-        statistician();
-        statistician(int c, double t, double min, double max);
+        // statistician();
+        statistician(int c = 0, double t = 0, double min = INT_MAX, double max = INT_MIN);
         // MODIFICATION MEMBER FUNCTIONS
         void next(double r);
         void reset();
@@ -80,10 +81,8 @@ namespace main_savitch_2C
         friend statistician operator +(const statistician& s1, const statistician& s2);
         friend statistician operator *(double scale, const statistician& s);
     private:
-        int count;       // How many numbers in the sequence
-        double total;    // The sum of all the numbers in the sequence
-        double tinyest;  // The smallest number in the sequence
-        double largest;  // The largest number in the sequence
+        int count; /* How many values were input */
+        double total, tinyest, largest; /* Total, minimum and maximum of all values input */
     };
 
     // NON-MEMBER functions for the statistician class
