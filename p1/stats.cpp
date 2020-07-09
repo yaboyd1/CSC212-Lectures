@@ -56,8 +56,8 @@ namespace main_savitch_2C {
 	}
 
 	bool operator ==(const statistician& s1, const statistician& s2) {
-		return s1.count == s2.count && s1.total == s2.total 
-			&& s1.tinyest == s2.tinyest 
-			&& s1.largest == s2.largest;
+		return s1.length() == s2.length() && s1.sum() == s2.sum() 
+			&& s1.minimum() == s2.minimum() 
+			&& s1.maximum() == s2.maximum();
 	}
 }
