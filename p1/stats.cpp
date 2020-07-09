@@ -1,3 +1,4 @@
+#include <cassert> // Provides assert()
 #include "stats.h"
 
 namespace main_savitch_2C {
@@ -24,12 +25,15 @@ namespace main_savitch_2C {
 		return total;
 	}
 	double statistician::mean() const {
+		assert(length() > 0);
 		return (double)total/count;
 	}
 	double statistician::minimum() const {
+		assert(length() > 0);
 		return tinyest;
 	}
 	double statistician::maximum() const {
+		assert(length() > 0);
 		return largest;
 	}
     // FRIEND FUNCTIONS
