@@ -55,7 +55,9 @@ namespace main_savitch_2C {
 	}
 	statistician operator *(double scale, const statistician& s) {
 		if (s.count == 0) return s;
-		return statistician(scale * s.count, scale * s.total, scale * s.tinyest, scale * s.largest);
+		return statistician(scale * s.count, scale * s.total, 
+			scale > 0 ? scale * s.tinyest : scale * s.largest, 
+			scale > 0 ? scale * s.largest : scale * s.tinyest);
 	}
 
 	bool operator ==(const statistician& s1, const statistician& s2) {
