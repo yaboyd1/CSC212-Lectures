@@ -22,8 +22,8 @@ namespace main_savitch_2C {
 	}
 	void statistician::reset() {
 		total = count = 0;
-		tinyest = INT_MIN;
-		largest = INT_MAX;
+		tinyest = INT_MAX;
+		largest = INT_MIN;
 	}
     // CONSTANT MEMBER FUNCTIONS
 	int statistician::length() const {
