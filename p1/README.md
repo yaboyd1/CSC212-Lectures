@@ -2,4 +2,4 @@
 
 ### Statistician Class
 
-[Source](https://www.cs.colorado.edu/~main/projects/chap02a.html "Click me for more information!")
+[Source](https://www.cs.colorado.edu/~main/projects/chap02a.html "Click me for more information!"){target="_blank"}
