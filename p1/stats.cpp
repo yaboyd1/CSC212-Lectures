@@ -8,7 +8,7 @@ namespace main_savitch_2C {
 		count = c, total = t, tinyest = min, largest = max;
 	}
 
-    // MODIFICATION MEMBER FUNCTIONS
+	// MODIFICATION MEMBER FUNCTIONS
 	void statistician::next(double r) {
 		if (count == 0) tinyest = largest = r;
 		if (r < tinyest) tinyest = r;
@@ -21,7 +21,7 @@ namespace main_savitch_2C {
 		total = count = 0, tinyest = INT_MAX, largest = INT_MIN;
 	}
 
-    // CONSTANT MEMBER FUNCTIONS
+	// CONSTANT MEMBER FUNCTIONS
 	int statistician::length() const {
 		return count;
 	}
@@ -45,7 +45,7 @@ namespace main_savitch_2C {
 		return largest;
 	}
 
-    // FRIEND FUNCTIONS
+	// FRIEND FUNCTIONS
 	statistician operator +(const statistician& s1, const statistician& s2) {
 		if (s1.count == 0) return s2;
 		if (s1.count == 0) return s1;
