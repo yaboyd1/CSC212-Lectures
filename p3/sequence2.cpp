@@ -5,7 +5,7 @@ using namespace std;
 
 namespace main_savitch_4 {
 	// CONSTRUCTORS
-	sequence::sequence(size_type initial_capacity = DEFAULT_CAPACITY) {
+	sequence::sequence(size_type initial_capacity) {
 		used = current_index = 0;
 		capacity = initial_capacity;
 		data = new sequence::value_type[capacity];
@@ -44,7 +44,7 @@ namespace main_savitch_4 {
 	}
 
 	void sequence::insert(const value_type& entry) {
-		//assert(size() < CAPACITY);
+		if (used == capacity) resize(capacity + 1);
 		if (!is_item()) current_index = 0; /* Insert at the start of the sequence at default */
 		for (sequence::size_type i = used; i > current_index; --i)
 			data[i] = data[i - 1]; /* Shift elements forward to make room */
@@ -53,7 +53,7 @@ namespace main_savitch_4 {
 	}
 
 	void sequence::attach(const value_type& entry) {
-		//assert(size() < CAPACITY);
+		if (used == capacity) resize(capacity + 1);
 		if (!is_item()) current_index = used - 1; /* Insert at the end of the sequence at default */
 		for (sequence::size_type i = used; i > current_index + 1; --i)
 			data[i] = data[i - 1]; /* Shift elements forward to make room */
@@ -87,6 +87,7 @@ namespace main_savitch_4 {
 	}
 
 	sequence::value_type sequence::current() const {
+		assert(is_item());
 		return data[current_index];
 	}
 }
