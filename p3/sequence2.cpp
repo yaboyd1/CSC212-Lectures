@@ -24,8 +24,14 @@ namespace main_savitch_4 {
 	}
 
 	// MODIFICATION MEMBER FUNCTIONS
-	void resize(sequence::size_type new_capacity) {
-
+	void sequence::resize(sequence::size_type new_capacity) {
+		if (new_capacity == capacity) return;
+		if (new_capacity < used) used = new_capacity;
+		sequence::value_type *new_data = new sequence::value_type[new_capacity];
+		copy(data, data + used, new_data);
+		delete [] data;
+		data = new_data;
+		capacity = new_capacity;
 	}
 
 	void sequence::start() {
