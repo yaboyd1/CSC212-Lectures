@@ -6,15 +6,12 @@ using namespace std;
 namespace main_savitch_4 {
 	// CONSTRUCTORS
 	sequence::sequence(size_type initial_capacity) {
-		used = current_index = 0;
-		capacity = initial_capacity;
+		used = current_index = 0, capacity = initial_capacity;
 		data = new sequence::value_type[capacity];
 	}
 
 	sequence::sequence(const sequence& source) {
-		used = source.used;
-		current_index = source.current_index;
-		capacity = source.capacity;
+		used = source.used, current_index = source.current_index, capacity = source.capacity;
 		data = new sequence::value_type[capacity];
 		copy(source.data, source.data + used, data);
 	}
@@ -25,11 +22,11 @@ namespace main_savitch_4 {
 
 	// MODIFICATION MEMBER FUNCTIONS
 	void sequence::resize(sequence::size_type new_capacity) {
-		if (new_capacity == capacity) return;
-		if (new_capacity < used) used = new_capacity;
+		if (new_capacity == capacity) return; /* Already right size */
+		if (new_capacity < used) used = new_capacity; /* Can't allocate less */
 		sequence::value_type *new_data = new sequence::value_type[new_capacity];
-		copy(data, data + used, new_data);
-		delete [] data;
+		copy(data, data + used, new_data); /* Copy old data into new array */
+		delete [] data; /* Delete old data */
 		data = new_data;
 		capacity = new_capacity;
 	}
@@ -69,10 +66,9 @@ namespace main_savitch_4 {
 	}
 
 	void sequence::operator =(const sequence& source) {
-		if (this == &source) return;
-		used = source.used;
-		current_index = source.current_index;
-		capacity = source.capacity;
+		if (this == &source) return; /* Checking for self assignment */
+		delete [] data; /* Delete old data */
+		used = source.used, current_index = source.current_index, capacity = source.capacity;
 		data = new sequence::value_type[capacity];
 		copy(source.data, source.data + used, data);
 	}
