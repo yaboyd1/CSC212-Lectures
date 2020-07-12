@@ -3,55 +3,55 @@
 
 namespace main_savitch_3 {
 	// CONSTRUCTOR
-	sequence() {
+	sequence::sequence() {
 		used = current_index = 0;
 	}
 
 	// MODIFICATION MEMBER FUNCTIONS
-	void start() {
+	void sequence::start() {
 		if (used != 0) current_index = 0;
 	}
 
-	void advance() {
+	void sequence::advance() {
 		assert(is_item());
 		++current_index;
 	}
 
-	void insert(const value_type& entry) {
+	void sequence::insert(const value_type& entry) {
 		assert(size() < CAPACITY);
 		if (!is_item()) current_index = 0; /* Insert at the start of the sequence at default */
-		for (sequence1::size_type i = used; i > current_index; --i) 
+		for (sequence::size_type i = used; i > current_index; --i)
 			data[i] = data[i - 1]; /* Shift elements forward to make room */
 		data[current_index] = entry;
 		++used;
 	}
 
-	void attach(const value_type& entry) {
+	void sequence::attach(const value_type& entry) {
 		assert(size() < CAPACITY);
 		if (!is_item()) current_index = used - 1; /* Insert at the end of the sequence at default */
-		for (sequence1::size_type i = used; i > current_index + 1; --i) 
+		for (sequence::size_type i = used; i > current_index + 1; --i)
 			data[i] = data[i - 1]; /* Shift elements forward to make room */
 		data[++current_index] = entry;
 		++used;
 	}
 
-	void remove_current() {
+	void sequence::remove_current() {
 		assert(is_item());
-		for (sequence1::size_type i = current_index + 1; i < used; ++i) 
+		for (sequence::size_type i = current_index + 1; i < used; ++i)
 			data[i - 1] = data[i]; /* Overwrite the data */
 		--used;
 	}
 
 	// CONSTANT MEMBER FUNCTIONS
-	size_type size() const {
+	sequence::size_type sequence::size() const {
 		return used;
 	}
 
-	bool is_item() const {
-		return used != 0;
+	bool sequence::is_item() const {
+		return current_index < used;
 	}
 
-	value_type current() const {
+	sequence::value_type sequence::current() const {
 		assert(is_item());
 		return data[current_index];
 	}

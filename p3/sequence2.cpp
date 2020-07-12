@@ -83,7 +83,7 @@ namespace main_savitch_4 {
 	}
 
 	bool sequence::is_item() const {
-		return used != 0;
+		return current_index < used;
 	}
 
 	sequence::value_type sequence::current() const {
