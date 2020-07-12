@@ -1,8 +1,10 @@
-#include <cassert> // Provides assert
+#include <algorithm> // Provides copy()
+#include <cassert>   // Provides assert
 #include "sequence2.h"
+using namespace std;
 
 namespace main_savitch_4 {
-	// CONSTRUCTOR
+	// CONSTRUCTORS
 	sequence::sequence(size_type initial_capacity = DEFAULT_CAPACITY) {
 		used = current_index = 0;
 		capacity = initial_capacity;
@@ -10,14 +12,22 @@ namespace main_savitch_4 {
 	}
 
 	sequence::sequence(const sequence& source) {
-
+		used = source.used;
+		current_index = source.current_index;
+		capacity = source.capacity;
+		data = new sequence::value_type[capacity];
+		copy(source.data, source.data + used, data);
 	}
 
 	sequence::~sequence() {
-
+		delete [] data;
 	}
 
 	// MODIFICATION MEMBER FUNCTIONS
+	void resize(sequence::size_type new_capacity) {
+
+	}
+
 	void sequence::start() {
 		if (used != 0) current_index = 0;
 	}
@@ -28,18 +38,18 @@ namespace main_savitch_4 {
 	}
 
 	void sequence::insert(const value_type& entry) {
-		assert(size() < CAPACITY);
+		//assert(size() < CAPACITY);
 		if (!is_item()) current_index = 0; /* Insert at the start of the sequence at default */
-		for (sequence1::size_type i = used; i > current_index; --i)
+		for (sequence::size_type i = used; i > current_index; --i)
 			data[i] = data[i - 1]; /* Shift elements forward to make room */
 		data[current_index] = entry;
 		++used;
 	}
 
 	void sequence::attach(const value_type& entry) {
-		assert(size() < CAPACITY);
+		//assert(size() < CAPACITY);
 		if (!is_item()) current_index = used - 1; /* Insert at the end of the sequence at default */
-		for (sequence1::size_type i = used; i > current_index + 1; --i)
+		for (sequence::size_type i = used; i > current_index + 1; --i)
 			data[i] = data[i - 1]; /* Shift elements forward to make room */
 		data[++current_index] = entry;
 		++used;
@@ -47,13 +57,18 @@ namespace main_savitch_4 {
 
 	void sequence::remove_current() {
 		assert(is_item());
-		for (sequence1::size_type i = current_index + 1; i < used; ++i)
+		for (sequence::size_type i = current_index + 1; i < used; ++i)
 			data[i - 1] = data[i]; /* Overwrite the data */
 		--used;
 	}
 
-	void operator =(const sequence& source) {
-
+	void sequence::operator =(const sequence& source) {
+		if (this == &source) return;
+		used = source.used;
+		current_index = source.current_index;
+		capacity = source.capacity;
+		data = new sequence::value_type[capacity];
+		copy(source.data, source.data + used, data);
 	}
 
 	// CONSTANT MEMBER FUNCTIONS
@@ -65,8 +80,7 @@ namespace main_savitch_4 {
 		return used != 0;
 	}
 
-	sequence:value_type sequence::current() const {
-		assert(is_item());
+	sequence::value_type sequence::current() const {
 		return data[current_index];
 	}
 }
