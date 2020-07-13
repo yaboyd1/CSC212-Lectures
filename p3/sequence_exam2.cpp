@@ -11,7 +11,7 @@
 // constants POINTS[1], POINTS[2]...
 
 #include <iostream>    // Provides cout.
-#include <string>      // Provides memcpy.
+#include <cstring>     // Provides memcpy.
 #include <cstdlib>     // Provides size_t.
 #include "sequence2.h" // Provides the Sequence class with double items.
 using namespace std;
