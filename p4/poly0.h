@@ -126,53 +126,51 @@
 // following line and the set of brackets that follow.
 namespace main_savitch_3
 {
-    
-    class polynomial
-    {
-    public:
-	// CONSTANTS
-	static const unsigned int CAPACITY = 30;
-	static const unsigned int MAX_EX = CAPACITY - 1;
-	
-        // CONSTRUCTOR
-	polynomial(double c = 0.0, unsigned int exponent = 0);
+	class polynomial
+	{
+	public:
+		// CONSTANTS
+		static const unsigned int CAPACITY = 30;
+		static const unsigned int MAX_EX = CAPACITY - 1;
 
-	// MODIFICATION MEMBER FUNCTIONS
-	void add_to_coef(double amount, unsigned int exponent);
-	void assign_coef(double coefficient, unsigned int exponent);
-	void clear( );
-	
-	// CONSTANT MEMBER FUNCTIONS
-	double coefficient(unsigned int exponent) const;
-	unsigned int degree( ) const { return current_degree; }
-	polynomial derivative( ) const;
-	double eval(double x) const;
-	unsigned int next_term(unsigned int e) const;
-	unsigned int previous_term(unsigned int e) const;
-	
-	// CONSTANT OPERATORS
-	double operator( ) (double x) const { return eval(x); }
-	
-    private:
-	double coef[CAPACITY];
-	unsigned int current_degree;
-    };
-    
-    // NON-MEMBER BINARY OPERATORS
-    polynomial operator +(const polynomial& p1, const polynomial& p2);
-    polynomial operator -(const polynomial& p1, const polynomial& p2);
-    polynomial operator *(const polynomial& p1, const polynomial& p2);
-    
-    // NON-MEMBER OUTPUT FUNCTIONS
-    std::ostream& operator << (std::ostream& out, const polynomial& p);
-    void make_gif(
-	const polynomial& p,
-	const char filename[ ],
-	double low_x,
-	double high_x,
-	double low_y,
-	double high_y
-	);
+		// CONSTRUCTOR
+		polynomial(double c = 0.0, unsigned int exponent = 0);
+
+		// MODIFICATION MEMBER FUNCTIONS
+		void add_to_coef(double amount, unsigned int exponent);
+		void assign_coef(double coefficient, unsigned int exponent);
+		void clear();
+
+		// CONSTANT MEMBER FUNCTIONS
+		double coefficient(unsigned int exponent) const;
+		unsigned int degree() const { return current_degree; }
+		polynomial derivative() const;
+		double eval(double x) const;
+		unsigned int next_term(unsigned int e) const;
+		unsigned int previous_term(unsigned int e) const;
+
+		// CONSTANT OPERATORS
+		double operator() (double x) const { return eval(x); }
+	private:
+		double coef[CAPACITY];
+		unsigned int current_degree;
+	};
+
+	// NON-MEMBER BINARY OPERATORS
+	polynomial operator +(const polynomial& p1, const polynomial& p2);
+	polynomial operator -(const polynomial& p1, const polynomial& p2);
+	polynomial operator *(const polynomial& p1, const polynomial& p2);
+
+	// NON-MEMBER OUTPUT FUNCTIONS
+	std::ostream& operator << (std::ostream& out, const polynomial& p);
+	void make_gif(
+		const polynomial& p,
+		const char filename[ ],
+		double low_x,
+		double high_x,
+		double low_y,
+		double high_y
+		);
 
 }
 #endif
