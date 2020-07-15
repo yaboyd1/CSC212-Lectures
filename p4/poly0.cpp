@@ -87,23 +87,19 @@ namespace main_savitch_3
 	polynomial operator +(const polynomial& p1, const polynomial& p2) {
 		if (p1.degree() == 0) return p2;
 		if (p2.degree() == 0) return p1;
-		polynomial max, min;
-		p1.degree() > p2.degree() ? max = p1, min = p2 : max = p2, min = p1;
-		for (unsigned int i = 0; i != min.degree(); ++i) {
-			max.add_to_coef(min.coefficient(i), i);
-		}
-		return max;
+		polynomial sum;
+		for(unsigned int i = 0; i < p1.degree(); ++i) sum.add_to_coef(p1.coefficient(i), i);
+		for(unsigned int i = 0; i < p2.degree(); ++i) sum.add_to_coef(p2.coefficient(i), i);
+		return sum;
 	}
 
 	polynomial operator -(const polynomial& p1, const polynomial& p2) {
 		if (p1.degree() == 0) return p2;
 		if (p2.degree() == 0) return p1;
-		polynomial max, min;
-		p1.degree() > p2.degree() ? max = p1, min = p2 : max = p2, min = p1;
-		for (unsigned int i = 0; i != min.degree(); ++i) {
-			max.add_to_coef(-min.coefficient(i), i);
-		}
-		return max;
+		polynomial difference;
+		for(unsigned int i = 0; i < p1.degree(); ++i) difference.add_to_coef(p1.coefficient(i), i);
+		for(unsigned int i = 0; i < p2.degree(); ++i) difference.add_to_coef(-p2.coefficient(i), i);
+		return difference;
 	}
 
 	/* Just for now until I figure this out */
