@@ -1,6 +1,7 @@
 #include <cassert>   // Provides assert()
 #include <algorithm> // Provides fill_n()
 #include <climits>   // Provides UINT_MAX
+#include <cmath>	 // Provides pow()
 using namespace std;
 #include "poly0.h"
 
@@ -30,8 +31,8 @@ namespace main_savitch_3
 		/* Set new Current Degree */
 		if (exponent > current_degree) current_degree = exponent;
 		if (coef[current_degree] == 0) {
-			for (unsigned int i = current_degree; i > 0 && coef[i] != 0; --i) {
-				--current_degree;
+			for (unsigned int i = current_degree; i != 0 && coef[i] == 0; --i) {
+				current_degree = i - 1;
 			}
 		}
 	}
@@ -49,15 +50,23 @@ namespace main_savitch_3
 
 	/* Just for now until I figure this out */
 	polynomial polynomial::derivative() const {
-		return *this;
+		polynomial der;
+		for (unsigned int i = degree(); i > 1; --i) {
+			der.assign_coef(coefficient(i) * i, i - 1);
+		}
+		return der;
 	}
 
 	double polynomial::eval(double x) const{
-		return 0;
+		double total = 0;
+		for (unsigned int i = 0; i < degree(); ++i) {
+			total += coefficient(i) * pow(x, i);
+		}
+		return total;
 	}
 
 	unsigned int polynomial::next_term(unsigned int e) const {
-		for (unsigned int i = e + 1; i != MAX_EX; ++i) {
+		for (unsigned int i = e + 1; i <= degree(); ++i) {
 			if (coefficient(i) != 0) {
 				return i;
 			}
