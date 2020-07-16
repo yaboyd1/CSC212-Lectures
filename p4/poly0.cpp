@@ -14,8 +14,9 @@ namespace main_savitch_3
 	// CONSTRUCTOR
 	polynomial::polynomial(double c, unsigned int exponent) {
 		assert(exponent <= MAX_EX);
+		if (current_degree == 0) exponent = 0;
 		clear();
-		current_degree = 0;
+		current_degree = exponent;
 		assign_coef(c, exponent);
 	}
 
