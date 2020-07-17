@@ -115,12 +115,20 @@ namespace main_savitch_3 {
 	}
 
 	// NON-MEMBER OUTPUT FUNCTIONS
-
-	/* Just for now until I figure this out */
 	std::ostream& operator << (std::ostream& out, const polynomial& p) {
-		for (int i = 0; i < degree(); ++i) {
-			//???
+		if (!p.degree()) return out << 0;
+		unsigned int deg = p.degree();
+    	out << p.coefficient(deg);
+    	if (deg > 0) out << "x";
+    	if (deg > 1) out << "^" << deg;
+    	for (unsigned int i = p.previous_term(deg); i != UINT_MAX; i = p.previous_term(i)) {
+    		double term = p.coefficient(i);
+			term > 0 ? out << " + " << term : out << " - " << -term;
+			if (i > 0) out << "x";
+			if (i > 1) out << "^" << i;
+			if (i == 0) break;
 		}
+		return out << endl;
 	}
 
 	void make_gif(
@@ -130,5 +138,5 @@ namespace main_savitch_3 {
 		double high_x,
 		double low_y,
 		double high_y
-		);
+	);
 }
