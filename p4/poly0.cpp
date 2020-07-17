@@ -60,7 +60,7 @@ namespace main_savitch_3
 
 	double polynomial::eval(double x) const{
 		double total = 0;
-		for (unsigned int i = 0; i < degree(); ++i) {
+		for (unsigned int i = 0; i <= degree(); ++i) {
 			total += coefficient(i) * pow(x, i);
 		}
 		return total;
@@ -89,8 +89,8 @@ namespace main_savitch_3
 		if (p1.degree() == 0) return p2;
 		if (p2.degree() == 0) return p1;
 		polynomial sum;
-		for(unsigned int i = 0; i < p1.degree(); ++i) sum.add_to_coef(p1.coefficient(i), i);
-		for(unsigned int i = 0; i < p2.degree(); ++i) sum.add_to_coef(p2.coefficient(i), i);
+		for(unsigned int i = 0; i <= p1.degree(); ++i) sum.add_to_coef(p1.coefficient(i), i);
+		for(unsigned int i = 0; i <= p2.degree(); ++i) sum.add_to_coef(p2.coefficient(i), i);
 		return sum;
 	}
 
@@ -98,8 +98,8 @@ namespace main_savitch_3
 		if (p1.degree() == 0) return p2;
 		if (p2.degree() == 0) return p1;
 		polynomial difference;
-		for(unsigned int i = 0; i < p1.degree(); ++i) difference.add_to_coef(p1.coefficient(i), i);
-		for(unsigned int i = 0; i < p2.degree(); ++i) difference.add_to_coef(-p2.coefficient(i), i);
+		for(unsigned int i = 0; i <= p1.degree(); ++i) difference.add_to_coef(p1.coefficient(i), i);
+		for(unsigned int i = 0; i <= p2.degree(); ++i) difference.add_to_coef(-p2.coefficient(i), i);
 		return difference;
 	}
 
