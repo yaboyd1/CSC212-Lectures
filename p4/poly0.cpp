@@ -5,8 +5,7 @@
 using namespace std;
 #include "poly0.h"
 
-namespace main_savitch_3
-{
+namespace main_savitch_3 {
 	// CONSTANTS
 	const unsigned int polynomial::CAPACITY;
 	const unsigned int polynomial::MAX_EX;
@@ -14,9 +13,7 @@ namespace main_savitch_3
 	// CONSTRUCTOR
 	polynomial::polynomial(double c, unsigned int exponent) {
 		assert(exponent <= MAX_EX);
-		if (c == 0) exponent = 0;
 		clear();
-		current_degree = exponent;
 		assign_coef(c, exponent);
 	}
 
@@ -52,7 +49,7 @@ namespace main_savitch_3
 	/* Just for now until I figure this out */
 	polynomial polynomial::derivative() const {
 		polynomial der;
-		for (unsigned int i = degree(); i > 1; --i) {
+		for (unsigned int i = degree(); i >= 1; --i) {
 			der.assign_coef(coefficient(i) * i, i - 1);
 		}
 		return der;
@@ -121,7 +118,9 @@ namespace main_savitch_3
 
 	/* Just for now until I figure this out */
 	std::ostream& operator << (std::ostream& out, const polynomial& p) {
-		return out << "Hi";
+		for (int i = 0; i < degree(); ++i) {
+			//???
+		}
 	}
 
 	void make_gif(
