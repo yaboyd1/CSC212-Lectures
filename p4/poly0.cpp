@@ -14,7 +14,7 @@ namespace main_savitch_3
 	// CONSTRUCTOR
 	polynomial::polynomial(double c, unsigned int exponent) {
 		assert(exponent <= MAX_EX);
-		if (current_degree == 0) exponent = 0;
+		if (c == 0) exponent = 0;
 		clear();
 		current_degree = exponent;
 		assign_coef(c, exponent);
@@ -76,10 +76,12 @@ namespace main_savitch_3
 	}
 
 	unsigned int polynomial::previous_term(unsigned int e) const {
-		for (unsigned int i = e - 1; i > 0; --i) {
+		if (e == 0) return UINT_MAX;
+		for (unsigned int i = e - 1; i >= 0; --i) {
 			if (coefficient(i) != 0) {
 				return i;
 			}
+			if (i == 0) break;
 		}
 		return UINT_MAX;
 	}
@@ -106,7 +108,13 @@ namespace main_savitch_3
 	/* Just for now until I figure this out */
 	polynomial operator *(const polynomial& p1, const polynomial& p2) {
 		assert(p1.degree() + p2.degree() <= polynomial::MAX_EX);
-		return polynomial(p1);
+		polynomial product;
+		for (unsigned int i = 0; i <= p1.degree(); ++i) {
+			for (unsigned int j = 0; j <= p2.degree(); ++j) {
+				product.add_to_coef(p1.coefficient(i) * p2.coefficient(j), i + j);
+			}
+		}
+		return product;
 	}
 
 	// NON-MEMBER OUTPUT FUNCTIONS
