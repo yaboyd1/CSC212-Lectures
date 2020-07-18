@@ -1,5 +1,6 @@
 #include <iostream> // Provides cout
 #include <string>   // Provides string
+#include <cmath>    // Provides pow()
 using namespace std;
 
 void triangle(ostream& outs, unsigned int m, unsigned int n) {
@@ -58,13 +59,20 @@ void pattern(ostream& outs, unsigned int n, unsigned int i) {
 	// printed to the ostream outs. The longest line of the pattern has
 	// n stars beginning in column i of the output. For example,
 	// The above pattern is produced by the call pattern(cout, 8, 0).
+    if (n == 0) return;
+    pattern(outs, n / 2, i);
+    for (int j = 0; j < i; ++j) outs << "  ";
+    for (int j = 0; j < n; ++j) outs << "* ";
+    outs << endl;
+    pattern(outs, n / 2, i + n / 2);
 }
 
 int main() {
 	//triangle(cout, 3, 5);
 	//numbers(cout, "PREFIX", 2);
-	int test[] = {250, 42, 84, 53, 41};
-	for (int i : test)
-	    cout << i << " is " << bears(i) << endl;
+	//int test[] = {250, 42, 84, 53, 41};
+	//for (int i : test)
+	//	  cout << i << " is " << bears(i) << endl;
+    pattern(cout, 8, 0);
 	return 0;
 }
