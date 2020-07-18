@@ -1,0 +1,102 @@
+Running tests for polynomial class
+
+START OF TEST 1:
+Testing basic functions (25 points).
+I will now test the default constructor. After initializing
+with the default constructor, a the coefficient member
+function should always return zero (even beyond MAX_EX).
+Test passed.
+
+I will now test the constructor with arguments.
+Test passed.
+
+I will now test constructor like this: polynomial p(0.0, 3).
+After initializing this way, a polynomial
+should have all zero coefficients (even beyond MAX_EX).
+Test passed.
+
+I will now test assign_coef.
+Test passed.
+
+I will now test add_to_coef.
+Test passed.
+
+Checking that add_to_coef correctly adjusts degree downward.
+Test passed.
+
+Checking that assign_coef correctly adjusts degree downward.
+Test passed.
+
+I will now test the clear function.
+Test passed.
+
+Inserting 30 random coefficients
+   and then checking the basic functions.
+Test passed.
+
+Test 1 got 25 points out of a possible 25.
+END OF TEST 1.
+
+
+START OF TEST 2:
+Testing derivative function (5 points).
+Testing derivative.
+Test passed.
+
+Test 2 got 5 points out of a possible 5.
+END OF TEST 2.
+
+
+START OF TEST 3:
+Testing eval and operator ( ) (5 points).
+Testing eval and operator ( ).
+Test 3 got 5 points out of a possible 5.
+END OF TEST 3.
+
+
+START OF TEST 4:
+Testing next_term and previous_term function (5 points).
+Testing next_term function.
+Next Term Function is okay.
+Testing previous_term function.
+Testing previous_term(0)
+Test 4 got 5 points out of a possible 5.
+END OF TEST 4.
+
+
+START OF TEST 5:
+Testing operator + (5 points).
+Testing operator +
+Test passed.
+
+Test 5 got 5 points out of a possible 5.
+END OF TEST 5.
+
+
+START OF TEST 6:
+Testing operator - (5 points).
+Testing operator -
+Test passed.
+
+Test 6 got 5 points out of a possible 5.
+END OF TEST 6.
+
+
+START OF TEST 7:
+Testing operator * (5 points).
+Testing operator *
+Test passed.
+
+Test 7 got 5 points out of a possible 5.
+END OF TEST 7.
+
+
+START OF TEST 8:
+Testing operator << (5 points).
+Printing a polynomial for visual inspection by the TA: 
+-5.5x^5 + 3.3x^3 - 2.2x^2 + 1.1x + 10
+Test 8 got 5 points out of a possible 5.
+END OF TEST 8.
+
+If you submit this to Dora now, you will have
+60 points out of the 60 points from this test program.
