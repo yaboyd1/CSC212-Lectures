@@ -1,4 +1,5 @@
-#include <iostream>
+#include <iostream> // Provides cout
+#include <string>   // Provides string
 using namespace std;
 
 void triangle(ostream& outs, unsigned int m, unsigned int n) {
@@ -24,7 +25,18 @@ void triangle(ostream& outs, unsigned int m, unsigned int n) {
 	cout << endl;
 }
 
+void numbers(ostream& outs, const string& prefix, unsigned int levels) {
+	if (levels == 0) {
+		outs << prefix << endl;
+		return;
+	}
+	for (unsigned int i = 1; i <= 9; ++i) {
+		numbers(outs, prefix + char(i + '0') + '.', levels - 1);
+	}
+}
+
 int main() {
 	triangle(cout, 3, 5);
+	numbers(cout, "PREFIX", 2);
 	return 0;
 }
