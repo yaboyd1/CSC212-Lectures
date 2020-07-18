@@ -29,9 +29,8 @@ namespace main_savitch_3 {
 		/* Set new Current Degree */
 		if (exponent > current_degree) current_degree = exponent;
 		if (coef[current_degree] == 0) {
-			for (unsigned int i = current_degree; i != 0 && coef[i] == 0; --i) {
-				current_degree = i - 1;
-			}
+			current_degree = previous_term(current_degree);
+			if (current_degree == UINT_MAX) current_degree = 0;
 		}
 	}
 
@@ -46,18 +45,17 @@ namespace main_savitch_3 {
 		return coef[exponent];
 	}
 
-	/* Just for now until I figure this out */
 	polynomial polynomial::derivative() const {
 		polynomial der;
-		for (unsigned int i = degree(); i >= 1; --i) {
+		for (unsigned int i = 1; i != 0; i = next_term(i)) {
 			der.assign_coef(coefficient(i) * i, i - 1);
 		}
 		return der;
 	}
 
 	double polynomial::eval(double x) const{
-		double total = 0;
-		for (unsigned int i = 0; i <= degree(); ++i) {
+		double total = coefficient(0);
+		for (unsigned int i = next_term(0); i != 0; i = next_term(i)) {
 			total += coefficient(i) * pow(x, i);
 		}
 		return total;
@@ -87,22 +85,21 @@ namespace main_savitch_3 {
 	polynomial operator +(const polynomial& p1, const polynomial& p2) {
 		if (p1.degree() == 0) return p2;
 		if (p2.degree() == 0) return p1;
-		polynomial sum;
-		for(unsigned int i = 0; i <= p1.degree(); ++i) sum.add_to_coef(p1.coefficient(i), i);
-		for(unsigned int i = 0; i <= p2.degree(); ++i) sum.add_to_coef(p2.coefficient(i), i);
+		polynomial sum(p1.coefficient(0) + p2.coefficient(0), 0);
+		for(unsigned int i = p1.next_term(0); i != 0; i = p1.next_term(i)) sum.add_to_coef(p1.coefficient(i), i);
+		for(unsigned int i = p2.next_term(0); i != 0; i = p2.next_term(i)) sum.add_to_coef(p2.coefficient(i), i);
 		return sum;
 	}
 
 	polynomial operator -(const polynomial& p1, const polynomial& p2) {
 		if (p1.degree() == 0) return p2;
 		if (p2.degree() == 0) return p1;
-		polynomial difference;
-		for(unsigned int i = 0; i <= p1.degree(); ++i) difference.add_to_coef(p1.coefficient(i), i);
-		for(unsigned int i = 0; i <= p2.degree(); ++i) difference.add_to_coef(-p2.coefficient(i), i);
+		polynomial difference(p1.coefficient(0) - p2.coefficient(0), 0);
+		for(unsigned int i = p1.next_term(0); i != 0; i = p1.next_term(i)) difference.add_to_coef(p1.coefficient(i), i);
+		for(unsigned int i = p2.next_term(0); i != 0; i = p2.next_term(i)) difference.add_to_coef(-p2.coefficient(i), i);
 		return difference;
 	}
 
-	/* Just for now until I figure this out */
 	polynomial operator *(const polynomial& p1, const polynomial& p2) {
 		assert(p1.degree() + p2.degree() <= polynomial::MAX_EX);
 		polynomial product;
