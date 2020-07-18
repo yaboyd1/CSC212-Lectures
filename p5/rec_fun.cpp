@@ -46,11 +46,12 @@ bool bears(int n) {
 	//   bear(84) is true
 	//   bear(53) is false
 	//   bear(41) is false
-	if (n == 42) return true;
-	if (n % 2 == 0) bears(n / 2);
-	else if (n % 3 == 0 || n % 4 == 0) bears((n % 10) * ((n / 10) % 10));
-	else if (n % 5 == 0) bears(n - 42);
-	return false;
+    if (n == 42) return true;
+    if (n < 42) return false;
+    if (n % 5 == 0) bears(n - 42);
+    else if ((n % 4 == 0 || n % 3 == 0) && (((n % 10) * ((n / 10) % 10)) != 0)) bears(n - ((n % 10) * ((n / 10) % 10)));
+    else if (n % 2 == 0) bears(n / 2);
+    else return false;
 }
 
 void pattern(ostream& outs, unsigned int n, unsigned int i) {
@@ -59,20 +60,26 @@ void pattern(ostream& outs, unsigned int n, unsigned int i) {
 	// printed to the ostream outs. The longest line of the pattern has
 	// n stars beginning in column i of the output. For example,
 	// The above pattern is produced by the call pattern(cout, 8, 0).
-    if (n == 0) return;
-    pattern(outs, n / 2, i);
-    for (int j = 0; j < i; ++j) outs << "  ";
-    for (int j = 0; j < n; ++j) outs << "* ";
-    outs << endl;
-    pattern(outs, n / 2, i + n / 2);
+	if (n == 0) return;
+	pattern(outs, n / 2, i);
+	for (int j = 0; j < i; ++j) outs << "  ";
+	for (int j = 0; j < n; ++j) outs << "* ";
+	outs << endl;
+	pattern(outs, n / 2, i + n / 2);
 }
 
 int main() {
 	//triangle(cout, 3, 5);
 	//numbers(cout, "PREFIX", 2);
-	//int test[] = {250, 42, 84, 53, 41};
-	//for (int i : test)
-	//	  cout << i << " is " << bears(i) << endl;
-    pattern(cout, 8, 0);
+	int test[] = {250, 42, 84, 53, 41};
+	bool correct[] = {1, 1, 1, 0, 0};
+	bool output[5];
+	for (int i = 0; i < 5; ++i) {
+		output[i] = bears(test[i]);
+		cout << test[i] << ": " << output[i];
+		if (output[i] != correct[i]) cout << " X ";
+		cout << endl;
+	}
+	//pattern(cout, 8, 0);
 	return 0;
 }
