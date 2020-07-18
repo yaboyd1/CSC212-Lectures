@@ -45,10 +45,26 @@ bool bears(int n) {
 	//   bear(84) is true
 	//   bear(53) is false
 	//   bear(41) is false
+	if (n == 42) return true;
+	if (n % 2 == 0) bears(n / 2);
+	else if (n % 3 == 0 || n % 4 == 0) bears((n % 10) * ((n / 10) % 10));
+	else if (n % 5 == 0) bears(n - 42);
+	return false;
+}
+
+void pattern(ostream& outs, unsigned int n, unsigned int i) {
+	// Precondition: n is a power of 2 greater than zero.
+	// Postcondition: A pattern based on the above example has been
+	// printed to the ostream outs. The longest line of the pattern has
+	// n stars beginning in column i of the output. For example,
+	// The above pattern is produced by the call pattern(cout, 8, 0).
 }
 
 int main() {
 	//triangle(cout, 3, 5);
-	numbers(cout, "PREFIX", 2);
+	//numbers(cout, "PREFIX", 2);
+	int test[] = {250, 42, 84, 53, 41};
+	for (int i : test)
+	    cout << i << " is " << bears(i) << endl;
 	return 0;
 }
