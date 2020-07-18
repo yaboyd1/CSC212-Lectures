@@ -30,13 +30,25 @@ void numbers(ostream& outs, const string& prefix, unsigned int levels) {
 		outs << prefix << endl;
 		return;
 	}
-	for (unsigned int i = 1; i <= 9; ++i) {
-		numbers(outs, prefix + char(i + '0') + '.', levels - 1);
+	for (char i = '1'; i <= '9'; ++i) {
+		numbers(outs, prefix + i + '.', levels - 1);
 	}
 }
 
+bool bears(int n) {
+	// Postcondition: A true return value means that it is possible to win
+	// the bear game by starting with n bears. A false return value means that
+	// it is not possible to win the bear game by starting with n bears.
+	// Examples:
+	//   bear(250) is true (as shown above)
+	//   bear(42) is true
+	//   bear(84) is true
+	//   bear(53) is false
+	//   bear(41) is false
+}
+
 int main() {
-	triangle(cout, 3, 5);
+	//triangle(cout, 3, 5);
 	numbers(cout, "PREFIX", 2);
 	return 0;
 }
