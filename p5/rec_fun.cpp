@@ -69,17 +69,24 @@ void pattern(ostream& outs, unsigned int n, unsigned int i) {
 }
 
 int main() {
-	//triangle(cout, 3, 5);
-	//numbers(cout, "PREFIX", 2);
+	cout << "Printing a triangle..." << endl;
+	triangle(cout, 3, 5);
+
+	cout << endl << "Printing some numbers..." << endl;
+	numbers(cout, "PREFIX", 2);
+
+	cout << endl << "Bears problem for 5 integers..." << endl;
 	int test[] = {250, 42, 84, 53, 41};
 	bool correct[] = {1, 1, 1, 0, 0};
 	bool output[5];
 	for (int i = 0; i < 5; ++i) {
 		output[i] = bears(test[i]);
 		cout << test[i] << ": " << output[i];
-		if (output[i] != correct[i]) cout << " X ";
+		output[i] != correct[i] ? cout << " X " : cout << " Correct! ";
 		cout << endl;
 	}
-	//pattern(cout, 8, 0);
+
+	cout << endl << "Printing a pattern..." << endl;
+	pattern(cout, 8, 0);
 	return 0;
 }
