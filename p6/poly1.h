@@ -273,102 +273,97 @@
 
 // If your compiler does not support namespaces, then please delete the
 // following line and the set of brackets that follow.
-namespace main_savitch_4
-{
-    
-    class polynomial
-    {
-    public:
-	// CONSTRUCTORS and DESTRUCTOR
-	polynomial( );
-	polynomial(const polynomial& source);
-	polynomial(double c, unsigned int exponent = 0);
-	~polynomial( );
+namespace main_savitch_4 {
+	class polynomial {
+	public:
+		// CONSTANTS
+		static const unsigned int DEFAULT_CAPACITY = 30;
 
-	// MODIFICATION MEMBER FUNCTIONS
-	void add_to_coef(double amount, unsigned int exponent);
-	void assign_coef(double coefficient, unsigned int exponent);
-	void clear( );
-	void reserve(size_t number);
-	void trim();
-	
-	// MODIFICATION OPERATORS
-	polynomial& operator =(const polynomial& source);
-	polynomial& operator =(double c)
-	    { clear( ); assign_coef(c, 0); return *this; }
-	polynomial& operator -=(const polynomial& p);
-	polynomial& operator -=(double c)
-	    { add_to_coef(-c, 0); return *this; };
-	polynomial& operator +=(const polynomial& p);
-	polynomial& operator +=(double c)
-	    { add_to_coef(c, 0); return *this; };
-	polynomial& operator *=(const polynomial& p);
-	polynomial& operator *=(double c);
-	
-	// CONSTANT MEMBER FUNCTIONS
-	double coefficient(unsigned int exponent) const;
-	double definite_integral(double low_bound, double high_bound) const;
-	unsigned int degree( ) const;
-	polynomial derivative(unsigned int n = 1) const;
-	double eval(double x) const;
-	void find_root(
-	    double& answer,
-	    bool& success,
-	    unsigned int& iterations,
-	    double guess = 0,
-	    unsigned int maximum_iterations = 100,
-	    double epsilon = 1e-8
-	    )
-	    const;
-	polynomial integral(unsigned int n = 1) const;
-	unsigned int next_term(unsigned int e) const;
-	unsigned int previous_term(unsigned int e) const;
-	double numeric_integral(
-	    double low_bound,
-	    double high_bound,
-	    unsigned int many_trapezoids = 100
-	    )
-	    const;
-	polynomial substitution(const polynomial& p) const;
-	
-	// CONSTANT OPERATORS
-	double operator( ) (double x) const { return eval(x); }
-	polynomial operator( ) (const polynomial& p) const { return substitution(p); }
-	polynomial operator -( ) const;
-	polynomial operator +( ) const { return (*this); };
-	
-    private:
-	size_t current_array_size;
-	double *coef;
-    };
-    
-    // NON-MEMBER BINARY OPERATORS
-    polynomial operator +(const polynomial& p1, const polynomial& p2);
-    polynomial operator +(const polynomial& p, double c);
-    inline
-    polynomial operator +(double c, const polynomial& p) { return p + c; };
-    polynomial operator -(const polynomial& p1, const polynomial& p2);
-    inline
-    polynomial operator -(const polynomial& p, double c) { return p + (-c); };
-    inline
-    polynomial operator -(double c, const polynomial& p) { return p + (-c); };
-    polynomial operator *(const polynomial& p1, const polynomial& p2);
-    polynomial operator *(const polynomial& p, double c);
-    inline
-    polynomial operator *(double c, const polynomial& p) { return p * c; };
-    polynomial operator ^(const polynomial& p, unsigned int n);
-    
-    // NON-MEMBER INPUT/OUTPUT FUNCTIONS
-    std::istream& operator >> (std::istream& in, polynomial& p);
-    std::ostream& operator << (std::ostream& out, const polynomial& p);
-    void make_gif(
-	const polynomial& p,
-	const char filename[ ],
-	double low_x,
-	double high_x,
-	double low_y,
-	double high_y
-	);
+		// CONSTRUCTORS and DESTRUCTOR
+		polynomial();
+		polynomial(const polynomial& source);
+		polynomial(double c, unsigned int exponent = 0);
+		~polynomial();
 
+		// MODIFICATION MEMBER FUNCTIONS
+		void add_to_coef(double amount, unsigned int exponent);
+		void assign_coef(double coefficient, unsigned int exponent);
+		void clear();
+		void reserve(size_t new_size);
+		void trim();
+		
+		// MODIFICATION OPERATORS
+		polynomial& operator =(const polynomial& source);
+		polynomial& operator =(double c) { clear(); assign_coef(c, 0); return *this; }
+		polynomial& operator -=(const polynomial& p);
+		polynomial& operator -=(double c) { add_to_coef(-c, 0); return *this; };
+		polynomial& operator +=(const polynomial& p);
+		polynomial& operator +=(double c) { add_to_coef(c, 0); return *this; };
+		polynomial& operator *=(const polynomial& p);
+		polynomial& operator *=(double c);
+		
+		// CONSTANT MEMBER FUNCTIONS
+		double coefficient(unsigned int exponent) const;
+		double definite_integral(double low_bound, double high_bound) const;
+		unsigned int degree() const;
+		polynomial derivative(unsigned int n = 1) const;
+		double eval(double x) const;
+		void find_root(
+			double& answer,
+			bool& success,
+			unsigned int& iterations,
+			double guess = 0,
+			unsigned int maximum_iterations = 100,
+			double epsilon = 1e-8
+			) const;
+		polynomial integral(unsigned int n = 1) const;
+		unsigned int next_term(unsigned int e) const;
+		unsigned int previous_term(unsigned int e) const;
+		double numeric_integral(
+			double low_bound,
+			double high_bound,
+			unsigned int many_trapezoids = 100
+			) const;
+		polynomial substitution(const polynomial& p) const;
+		
+		// CONSTANT OPERATORS
+		double operator() (double x) const { return eval(x); }
+		polynomial operator() (const polynomial& p) const { return substitution(p); }
+		polynomial operator -() const;
+		polynomial operator +() const { return (*this); };
+		
+	private:
+		size_t current_array_size, current_degree;
+		double *coef;
+	};
+
+	// NON-MEMBER BINARY OPERATORS
+	polynomial operator +(const polynomial& p1, const polynomial& p2);
+	polynomial operator +(const polynomial& p, double c);
+	inline
+	polynomial operator +(double c, const polynomial& p) { return p + c; };
+	polynomial operator -(const polynomial& p1, const polynomial& p2);
+	inline
+	polynomial operator -(const polynomial& p, double c) { return p + (-c); };
+	inline
+	polynomial operator -(double c, const polynomial& p) { return p + (-c); };
+	polynomial operator *(const polynomial& p1, const polynomial& p2);
+	polynomial operator *(const polynomial& p, double c);
+	inline
+	polynomial operator *(double c, const polynomial& p) { return p * c; };
+	polynomial operator ^(const polynomial& p, unsigned int n);
+
+	// NON-MEMBER INPUT/OUTPUT FUNCTIONS
+	std::istream& operator >> (std::istream& in, polynomial& p);
+	std::ostream& operator << (std::ostream& out, const polynomial& p);
+
+	void make_gif(
+		const polynomial& p,
+		const char filename[ ],
+		double low_x,
+		double high_x,
+		double low_y,
+		double high_y
+		);
 }
 #endif
