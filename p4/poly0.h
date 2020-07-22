@@ -124,10 +124,8 @@
 
 // If your compiler does not support namespaces, then please delete the
 // following line and the set of brackets that follow.
-namespace main_savitch_3
-{
-	class polynomial
-	{
+namespace main_savitch_3 {
+	class polynomial {
 	public:
 		// CONSTANTS
 		static const unsigned int CAPACITY = 30;

@@ -26,7 +26,7 @@ namespace main_savitch_3 {
 	void polynomial::assign_coef(double coefficient, unsigned int exponent) {
 		assert(exponent <= MAX_EX);
 		coef[exponent] = coefficient;
-		/* Set new Current Degree */
+		/* Set new current degree */
 		if (exponent > current_degree) current_degree = exponent;
 		if (coef[current_degree] == 0) {
 			current_degree = previous_term(current_degree);
@@ -115,11 +115,11 @@ namespace main_savitch_3 {
 	std::ostream& operator << (std::ostream& out, const polynomial& p) {
 		if (!p.degree()) return out << 0;
 		unsigned int deg = p.degree();
-    	out << p.coefficient(deg);
-    	if (deg > 0) out << "x";
-    	if (deg > 1) out << "^" << deg;
-    	for (unsigned int i = p.previous_term(deg); i != UINT_MAX; i = p.previous_term(i)) {
-    		double term = p.coefficient(i);
+		out << p.coefficient(deg);
+		if (deg > 0) out << "x";
+		if (deg > 1) out << "^" << deg;
+		for (unsigned int i = p.previous_term(deg); i != UINT_MAX; i = p.previous_term(i)) {
+			double term = p.coefficient(i);
 			term > 0 ? out << " + " << term : out << " - " << -term;
 			if (i > 0) out << "x";
 			if (i > 1) out << "^" << i;
