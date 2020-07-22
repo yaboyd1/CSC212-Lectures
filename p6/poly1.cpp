@@ -80,10 +80,18 @@ namespace main_savitch_4 {
 		return *this;
 	}
 	
-	polynomial& polynomial::operator -=(const polynomial& p);
-	polynomial& polynomial::operator +=(const polynomial& p);
-	polynomial& polynomial::operator *=(const polynomial& p);
-	polynomial& polynomial::operator *=(double c);
+	polynomial& polynomial::operator -=(const polynomial& p) {
+		return *this - p;	
+	}
+	polynomial& polynomial::operator +=(const polynomial& p) {
+		return *this + p;
+	}
+	polynomial& polynomial::operator *=(const polynomial& p) {
+		return *this * p;
+	}
+	polynomial& polynomial::operator *=(double c) {
+		return *this * c;
+	}
 
 	// CONSTANT MEMBER FUNCTIONS
 	double polynomial::coefficient(unsigned int exponent) const {
@@ -149,10 +157,22 @@ namespace main_savitch_4 {
 		unsigned int many_trapezoids = 100
 		) const;
 
-	polynomial polynomial::substitution(const polynomial& p) const;
+	polynomial polynomial::substitution(const polynomial& p) const {
+		/* Evaluate but instead of a number, it is a polynomial */
+		polynomial sub;
+		for (unsigned int i = 0; i < degree(); ++i) {
+			for (unsigned int j = 0; j < p.degree(); ++j) {
+				sub.add_to_coef(p.coefficient(i), i);
+			}
+		}
+		return sub;
+	}
 
 	// CONSTANT OPERATORS
-	polynomial polynomial::operator -() const;
+	polynomial polynomial::operator -() const {
+		polynomial negation = *this * -1;
+		return negation;
+	}
 
 	// NON-MEMBER BINARY OPERATORS
 	polynomial operator +(const polynomial& p1, const polynomial& p2) {
@@ -165,7 +185,9 @@ namespace main_savitch_4 {
 	}
 
 	polynomial operator +(const polynomial& p, double c) {
-		p.add_to_coef(c, 0);
+		polynomial total = p;
+		total.add_to_coef(c, 0);
+		return total;
 	}
 
 	polynomial operator -(const polynomial& p1, const polynomial& p2) {
@@ -189,7 +211,7 @@ namespace main_savitch_4 {
 	}
 
 	polynomial operator *(const polynomial& p, double c) {
-		polynomial product(p.coefficient(i) * c, 0);
+		polynomial product(p.coefficient(0) * c, 0);
 		for(unsigned int i = p.next_term(0); i != 0; i = p.next_term(i)) 
 			product.assign_coef(p.coefficient(i) * c, i);
 		return product;
@@ -199,7 +221,21 @@ namespace main_savitch_4 {
 
 	// NON-MEMBER INPUT/OUTPUT FUNCTIONS
 	std::istream& operator >> (std::istream& in, polynomial& p);
-	std::ostream& operator << (std::ostream& out, const polynomial& p);
+	std::ostream& operator << (std::ostream& out, const polynomial& p) {
+		if (!p.degree()) return out << 0;
+		unsigned int deg = p.degree();
+		out << p.coefficient(deg);
+		if (deg > 0) out << "x";
+		if (deg > 1) out << "^" << deg;
+		for (unsigned int i = p.previous_term(deg); i != UINT_MAX; i = p.previous_term(i)) {
+			double term = p.coefficient(i);
+			term > 0 ? out << " + " << term : out << " - " << -term;
+			if (i > 0) out << "x";
+			if (i > 1) out << "^" << i;
+			if (i == 0) break;
+		}
+		return out << endl;
+	}
 
 	void make_gif(
 		const polynomial& p,
