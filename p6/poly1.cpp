@@ -32,12 +32,13 @@ namespace main_savitch_4 {
 
 	// MODIFICATION MEMBER FUNCTIONS
 	void polynomial::add_to_coef(double amount, unsigned int exponent) {
-		if (current_degree + 1 == current_array_size) reserve(current_array_size + 1);
-		coef[exponent] += amount;
+		assign_coef(coef[exponent + amount], exponent);
 	}
+
 	void polynomial::assign_coef(double coefficient, unsigned int exponent) {
 		if (current_degree + 1 == current_array_size) reserve(current_array_size + 1);
 		coef[exponent] = coefficient;
+		/* Relying on implementation of previous term */
 	}
 
 	void polynomial::clear() {
@@ -58,7 +59,16 @@ namespace main_savitch_4 {
 	void polynomial::trim();
 
 	// MODIFICATION OPERATORS
-	polynomial& polynomial::operator =(const polynomial& source);
+	polynomial& polynomial::operator =(const polynomial& source) {
+		if (this == &source) return;
+		delete coef[];
+		current_array_size = source.current_array_size;
+		current_degree = source.current_degree;
+		coef = new double[current_array_size];
+		copy(source.coef, source.coef + current_degree + 1, coef);
+		return this;
+	}
+	
 	polynomial& polynomial::operator -=(const polynomial& p);
 	polynomial& polynomial::operator +=(const polynomial& p);
 	polynomial& polynomial::operator *=(const polynomial& p);
