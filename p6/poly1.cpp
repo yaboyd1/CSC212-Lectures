@@ -1,8 +1,8 @@
 #include <cstdlib>   // Provides size_t 
 #include <iostream>  // Provides cout
 #include <algorithm> // Provides fill_n() and copy()
-#include <climits>	 // Provides UINT_MAX
-#include <cmath>	 // Provides pow()
+#include <climits>   // Provides UINT_MAX
+#include <cmath>     // Provides pow()
 using namespace std;
 #include "poly1.h"
 
@@ -12,7 +12,7 @@ namespace main_savitch_4 {
 
 	// CONSTRUCTORS and DESTRUCTOR
 	polynomial::polynomial() {
-		current_array_size = DEFAULT_CAPACITY;
+		coef = new double[current_array_size = DEFAULT_CAPACITY];
 		clear();
 	}
 
@@ -24,7 +24,7 @@ namespace main_savitch_4 {
 	}
 
 	polynomial::polynomial(double c, unsigned int exponent) {
-		current_array_size = DEFAULT_CAPACITY;
+		coef = new double[current_array_size = DEFAULT_CAPACITY];
 		clear();
 		assign_coef(c, exponent);
 	}
@@ -81,30 +81,36 @@ namespace main_savitch_4 {
 	}
 	
 	polynomial& polynomial::operator -=(const polynomial& p) {
-		return *this - p;	
+		return *this = *this - p;	
 	}
 	polynomial& polynomial::operator +=(const polynomial& p) {
-		return *this + p;
+		return *this = *this + p;
 	}
 	polynomial& polynomial::operator *=(const polynomial& p) {
-		return *this * p;
+		return *this = *this * p;
 	}
 	polynomial& polynomial::operator *=(double c) {
-		return *this * c;
+		return *this = *this * c;
 	}
 
 	// CONSTANT MEMBER FUNCTIONS
 	double polynomial::coefficient(unsigned int exponent) const {
+		if (exponent > degree()) return 0;
 		return coef[exponent];
 	}
 
-	double polynomial::definite_integral(double low_bound, double high_bound) const;
+	double polynomial::definite_integral(double low_bound, double high_bound) const {
+		if (low_bound > high_bound) return -1 * definite_integral(high_bound, low_bound);
+		polynomial integral = this->integral();
+		return integral.eval(high_bound) - integral.eval(low_bound);
+	}
 
 	unsigned int polynomial::degree() const {
 		return current_degree;
 	}
 
 	polynomial polynomial::derivative(unsigned int n) const {
+		/* Have to make this loop n times */
 		polynomial der;
 		for (unsigned int i = 1; i != 0; i = next_term(i)) {
 			der.assign_coef(coefficient(i) * i, i - 1);
@@ -120,6 +126,7 @@ namespace main_savitch_4 {
 		return total;
 	}
 
+	/* Just for not until I figure this out */
 	void polynomial::find_root(
 		double& answer,
 		bool& success,
@@ -127,9 +134,18 @@ namespace main_savitch_4 {
 		double guess,
 		unsigned int maximum_iterations,
 		double epsilon
-		) const;
+		) const {
+		answer = 0;
+	}
 
-	polynomial polynomial::integral(unsigned int n) const;
+	polynomial polynomial::integral(unsigned int n) const {
+		/* Possible reserve function here */
+		polynomial integ;
+		for (unsigned int i = 1; i != 0; i = next_term(i)) {
+			integ.assign_coef(coefficient(i - 1) / i, i);
+		}
+		return integ;
+	}
 
 	unsigned int polynomial::next_term(unsigned int e) const {
 		for (unsigned int i = e + 1; i <= degree(); ++i) {
@@ -151,11 +167,14 @@ namespace main_savitch_4 {
 		return UINT_MAX;
 	}
 
+	/* Just for now until I figure this out */
 	double polynomial::numeric_integral(
 		double low_bound,
 		double high_bound,
-		unsigned int many_trapezoids = 100
-		) const;
+		unsigned int many_trapezoids
+		) const {
+		return 0;
+	}
 
 	polynomial polynomial::substitution(const polynomial& p) const {
 		/* Evaluate but instead of a number, it is a polynomial */
