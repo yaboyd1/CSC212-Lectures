@@ -40,6 +40,9 @@ namespace main_savitch_4 {
 
 	void polynomial::assign_coef(double coefficient, unsigned int exponent) {
 		if (current_degree + 1 == current_array_size) reserve(current_array_size + 1);
+
+		if (exponent >= current_array_size) reserve(exponent + 1);
+
 		coef[exponent] = coefficient;
 		/* Set new current degree */
 		if (exponent > current_degree) current_degree = exponent;
@@ -55,6 +58,7 @@ namespace main_savitch_4 {
 	}
 
 	void polynomial::reserve(size_t new_size) {
+		/* I'm having a lot of bugs with reserve, this sucks :( */
 		if (new_size == current_array_size) return;
 		if (new_size < current_degree + 1) new_size = current_degree;
 		double *new_coef = new double[new_size];
@@ -64,9 +68,8 @@ namespace main_savitch_4 {
 		current_array_size = new_size;
 	}
 
-	/* Just for now until I figure this out */
 	void polynomial::trim() {
-		return;
+		reserve(degree());
 	}
 
 	// MODIFICATION OPERATORS
@@ -219,8 +222,8 @@ namespace main_savitch_4 {
 	}
 
 	polynomial operator *(const polynomial& p1, const polynomial& p2) {
-		/* Reserve function here */
 		polynomial product;
+		//product.reserve(p1.degree() + p2.degree() + 2);
 		for (unsigned int i = 0; i <= p1.degree(); ++i) {
 			for (unsigned int j = 0; j <= p2.degree(); ++j) {
 				product.add_to_coef(p1.coefficient(i) * p2.coefficient(j), i + j);
