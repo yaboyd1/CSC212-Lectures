@@ -1,5 +1,6 @@
 #include <cstdlib>   // Provides size_t 
 #include <iostream>  // Provides cout
+#include <cassert>   // Provides assert()
 #include <algorithm> // Provides fill_n() and copy()
 #include <climits>   // Provides UINT_MAX
 #include <cmath>     // Provides pow()
@@ -40,9 +41,7 @@ namespace main_savitch_4 {
 
 	void polynomial::assign_coef(double coefficient, unsigned int exponent) {
 		if (current_degree + 1 == current_array_size) reserve(current_array_size + 1);
-
 		if (exponent >= current_array_size) reserve(exponent + 1);
-
 		coef[exponent] = coefficient;
 		/* Set new current degree */
 		if (exponent > current_degree) current_degree = exponent;
@@ -53,15 +52,15 @@ namespace main_savitch_4 {
 	}
 
 	void polynomial::clear() {
-		fill_n(coef, current_array_size, 0.0);
+		fill_n(coef, current_array_size, 0);
 		current_degree = 0;
 	}
 
 	void polynomial::reserve(size_t new_size) {
-		/* I'm having a lot of bugs with reserve, this sucks :( */
 		if (new_size == current_array_size) return;
 		if (new_size < current_degree + 1) new_size = current_degree;
 		double *new_coef = new double[new_size];
+		fill_n(new_coef, new_size, 0);
 		copy(coef, coef + current_degree + 1, new_coef);
 		delete [] coef;
 		coef = new_coef;
@@ -113,19 +112,17 @@ namespace main_savitch_4 {
 	}
 
 	polynomial polynomial::derivative(unsigned int n) const {
-		/* Have to make this loop n times */
 		polynomial der;
-		for (unsigned int i = 1; i != 0; i = next_term(i)) {
+		der.reserve(degree());
+		for (unsigned int i = 1; i != 0; i = next_term(i))
 			der.assign_coef(coefficient(i) * i, i - 1);
-		}
-		return der;
+		return n == 1 ? der : der.derivative(n - 1);
 	}
 
 	double polynomial::eval(double x) const {
 		double total = coefficient(0);
-		for (unsigned int i = next_term(0); i != 0; i = next_term(i)) {
+		for (unsigned int i = next_term(0); i != 0; i = next_term(i))
 			total += coefficient(i) * pow(x, i);
-		}
 		return total;
 	}
 
@@ -142,58 +139,51 @@ namespace main_savitch_4 {
 	}
 
 	polynomial polynomial::integral(unsigned int n) const {
-		/* Possible reserve function here */
-		polynomial integ;
-		for (unsigned int i = 1; i != 0; i = next_term(i)) {
-			integ.assign_coef(coefficient(i - 1) / i, i);
-		}
-		return integ;
+		polynomial integ(coefficient(0), 1);
+		integ.reserve(degree() + 1);
+		for (unsigned int i = next_term(0); i != 0; i = next_term(i))
+			integ.assign_coef(coefficient(i) / (i + 1), i + 1);
+		return n == 1 ? integ : integ.integral(n - 1);
 	}
 
 	unsigned int polynomial::next_term(unsigned int e) const {
-		for (unsigned int i = e + 1; i <= degree(); ++i) {
-			if (coefficient(i) != 0) {
+		for (unsigned int i = e + 1; i <= degree(); ++i)
+			if (coefficient(i) != 0)
 				return i;
-			}
-		}
 		return 0;
 	}
 
 	unsigned int polynomial::previous_term(unsigned int e) const {
 		if (e == 0) return UINT_MAX;
 		for (unsigned int i = e - 1; i >= 0; --i) {
-			if (coefficient(i) != 0) {
-				return i;
-			}
+			if (coefficient(i) != 0) return i;
 			if (i == 0) break;
 		}
 		return UINT_MAX;
 	}
 
-	/* Just for now until I figure this out */
-	double polynomial::numeric_integral(
-		double low_bound,
-		double high_bound,
-		unsigned int many_trapezoids
-		) const {
-		return 0;
+	double polynomial::numeric_integral(double low_bound, double high_bound, unsigned int many_trapezoids) const {
+		assert(many_trapezoids > 0);
+		if (low_bound > high_bound) return -1 * numeric_integral(high_bound, low_bound);
+		double witdth = (high_bound - low_bound) / (many_trapezoids * 2);
+		double answer = eval(low_bound) + eval(high_bound);
+		for (double i = witdth; i < high_bound; i += witdth)
+			answer += eval(i) * 2;
+		return witdth * answer * 0.5;
 	}
 
 	polynomial polynomial::substitution(const polynomial& p) const {
-		/* Evaluate but instead of a number, it is a polynomial */
 		polynomial sub;
-		for (unsigned int i = 0; i < degree(); ++i) {
-			for (unsigned int j = 0; j < p.degree(); ++j) {
-				sub.add_to_coef(p.coefficient(i), i);
-			}
-		}
+		sub.reserve(p.degree() + degree() + 1);
+		for (unsigned int i = 0; i <= p.degree(); ++i)
+			for (unsigned int j = 0; j <= degree(); ++j)
+				sub.add_to_coef(p.coefficient(i) * coefficient(i), i + j);
 		return sub;
 	}
 
 	// CONSTANT OPERATORS
 	polynomial polynomial::operator -() const {
-		polynomial negation = *this * -1;
-		return negation;
+		return *this * -1;
 	}
 
 	// NON-MEMBER BINARY OPERATORS
@@ -201,6 +191,7 @@ namespace main_savitch_4 {
 		if (p1.degree() == 0) return p2;
 		if (p2.degree() == 0) return p1;
 		polynomial sum(p1.coefficient(0) + p2.coefficient(0), 0);
+		sum.reserve(p1.degree() > p2.degree() ? p1.degree() + 1 : p2.degree() + 1);
 		for(unsigned int i = p1.next_term(0); i != 0; i = p1.next_term(i)) sum.add_to_coef(p1.coefficient(i), i);
 		for(unsigned int i = p2.next_term(0); i != 0; i = p2.next_term(i)) sum.add_to_coef(p2.coefficient(i), i);
 		return sum;
@@ -216,6 +207,7 @@ namespace main_savitch_4 {
 		if (p1.degree() == 0) return p2;
 		if (p2.degree() == 0) return p1;
 		polynomial difference(p1.coefficient(0) - p2.coefficient(0), 0);
+		difference.reserve(p1.degree() > p2.degree() ? p1.degree() + 1 : p2.degree() + 1);
 		for(unsigned int i = p1.next_term(0); i != 0; i = p1.next_term(i)) difference.add_to_coef(p1.coefficient(i), i);
 		for(unsigned int i = p2.next_term(0); i != 0; i = p2.next_term(i)) difference.add_to_coef(-p2.coefficient(i), i);
 		return difference;
@@ -223,12 +215,10 @@ namespace main_savitch_4 {
 
 	polynomial operator *(const polynomial& p1, const polynomial& p2) {
 		polynomial product;
-		//product.reserve(p1.degree() + p2.degree() + 2);
-		for (unsigned int i = 0; i <= p1.degree(); ++i) {
-			for (unsigned int j = 0; j <= p2.degree(); ++j) {
+		product.reserve(p1.degree() + p2.degree() + 1);
+		for (unsigned int i = 0; i <= p1.degree(); ++i)
+			for (unsigned int j = 0; j <= p2.degree(); ++j)
 				product.add_to_coef(p1.coefficient(i) * p2.coefficient(j), i + j);
-			}
-		}
 		return product;
 	}
 
