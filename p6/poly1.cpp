@@ -68,7 +68,7 @@ namespace main_savitch_4 {
 	}
 
 	void polynomial::trim() {
-		reserve(degree());
+		reserve(degree() + 1);
 	}
 
 	// MODIFICATION OPERATORS
@@ -126,16 +126,28 @@ namespace main_savitch_4 {
 		return total;
 	}
 
-	/* Just for not until I figure this out */
-	void polynomial::find_root(
-		double& answer,
-		bool& success,
-		unsigned int& iterations,
-		double guess,
-		unsigned int maximum_iterations,
-		double epsilon
-		) const {
-		answer = 0;
+	void polynomial::find_root(double& answer, bool& success, unsigned int& iterations, double guess, unsigned int maximum_iterations, double epsilon) const {
+		assert(epsilon > 0);
+
+		success = false;
+		answer = guess;
+
+		polynomial der = derivative();
+		double f = eval(answer), fprime = der.eval(answer);
+
+		for (iterations = 0; iterations < maximum_iterations; ++iterations) {
+			if (fabs(f) <= epsilon) {
+				success = true;
+				return;
+			}
+			else if (fabs(fprime) <= epsilon) {
+				success = false;
+				return;
+			}
+			answer = guess = answer - f/fprime;
+			f = eval(guess);
+			fprime = der.eval(guess);
+		}
 	}
 
 	polynomial polynomial::integral(unsigned int n) const {
@@ -177,7 +189,7 @@ namespace main_savitch_4 {
 		sub.reserve(p.degree() + degree() + 1);
 		for (unsigned int i = 0; i <= p.degree(); ++i)
 			for (unsigned int j = 0; j <= degree(); ++j)
-				sub.add_to_coef(p.coefficient(i) * coefficient(i), i + j);
+				sub.add_to_coef(p.coefficient(i) * coefficient(j), i + j);
 		return sub;
 	}
 
@@ -224,12 +236,19 @@ namespace main_savitch_4 {
 
 	polynomial operator *(const polynomial& p, double c) {
 		polynomial product(p.coefficient(0) * c, 0);
+		product.reserve(p.degree() + 1);
 		for(unsigned int i = p.next_term(0); i != 0; i = p.next_term(i)) 
 			product.assign_coef(p.coefficient(i) * c, i);
 		return product;
 	}
 
-	polynomial operator ^(const polynomial& p, unsigned int n);
+	polynomial operator ^(const polynomial& p, unsigned int n) {
+		polynomial power = p;
+		power.reserve(p.degree() * n + 1);
+		for (unsigned int i = 1; i < n; ++i)
+			power *= p;
+		return power;
+	}
 
 	// NON-MEMBER INPUT/OUTPUT FUNCTIONS
 	std::istream& operator >> (std::istream& in, polynomial& p);
