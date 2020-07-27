@@ -69,35 +69,30 @@
 #include <cstdlib>  // Provides size_t
 #include "node1.h"  // Provides node class
 
-namespace main_savitch_5
-{
-    class sequence
-    {
+namespace main_savitch_5 {
+    class sequence {
     public:
         // TYPEDEFS and MEMBER CONSTANTS
         typedef double value_type;
         typedef std::size_t size_type;
         // CONSTRUCTORS and DESTRUCTOR
-        sequence( );
-        sequence(const sequence& source);
-	~sequence( );
+        sequence();
+        sequence(const sequence& source); /* O(n): Copies items into new sequence */
+        ~sequence(); /* O(n): Deletes each item one by one */
         // MODIFICATION MEMBER FUNCTIONS
-        void start( );
-        void advance( );
-        void insert(const value_type& entry);
-        void attach(const value_type& entry);
-        void operator =(const sequence& source);
-	void remove_current( );
+        void start(); /* O(1): Puts cursor at the start of the sequence */
+        void advance(); /* O(1): Advance cursor to next item */
+        void insert(const value_type& entry); /* O(1): Places item before the cursor */
+        void attach(const value_type& entry); /* O(1): Places at item after the cursor */
+        void operator =(const sequence& source); /* O(1): Removes the current item */
+        void remove_current( ); /* O(n): Copies item into a sequence */
         // CONSTANT MEMBER FUNCTIONS
-        size_type size( ) const { return many_nodes; }
-        bool is_item( ) const { return (cursor != NULL); }
-        value_type current( ) const;
+        size_type size() const {return many_nodes;}
+        bool is_item() const {return cursor != NULL;}
+        value_type current() const;
     private:
-	node *head_ptr;
-	node *tail_ptr;
-	node *cursor;
-	node *precursor;
-	size_type many_nodes;
+    	node *head, *tail, *cursor, *precursor; /* First, Last, Current, and Previous Item of the sequence */
+    	size_type many_nodes; /* Total number of nodes */
     };
 }
 
