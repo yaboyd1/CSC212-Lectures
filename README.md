@@ -18,3 +18,7 @@
 1. [Statistician](/p1/)
 2. [Sequence](/p2/)
 3. [Dynamic Sequence](/p3/)
+4. [Polynomial](/p4/)
+5. [Recursion](/p5/)
+6. [Dynamic Polynomial](/p6/)
+7. [Linked List Sequence](/p7/)
