@@ -89,7 +89,7 @@ namespace main_savitch_5 {
         // CONSTANT MEMBER FUNCTIONS
         size_type size() const {return many_nodes;}
         bool is_item() const {return cursor != NULL;}
-        value_type current() const;
+        value_type current() const {return cursor->data();}
     private:
     	node *head, *tail, *cursor, *precursor; /* First, Last, Current, and Previous Item of the sequence */
     	size_type many_nodes; /* Total number of nodes */
