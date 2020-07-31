@@ -24,32 +24,20 @@ void PriorityQueue::operator =(const PriorityQueue& source) {
 
 void PriorityQueue::copy(const PriorityQueue& source) {
 	head = NULL;
-	if (source.is_empty()) return;
-	insert_front(source.head->data, source.head->priority);
-	Node* traversal = head->link;
-	for (Node* i = source.head->link; i != NULL; i = i->link) {
-		insert_after(traversal, source.head->data, source.head->priority);
-		traversal = traversal->link;
-	}
+	many_nodes = 0;
+	for (Node* i = source.head; i != NULL; i = i->link) 
+		insert(i->data, i->priority);
 }
 
 // MODIFICATION MEMBER FUNCTION 
 void PriorityQueue::insert(const Item& entry, unsigned int priority) {
-	/* Empty */
-	if (is_empty()) {
+	if (is_empty() || priority > head->priority) {
 		insert_front(entry, priority);
-	}
-	/* Insert at front */
-	else if (priority > head->priority) {
-		insert_front(entry, priority);
-	}
-	/* Insert at middle */
-	else {
-		/* Find link where priority is less */
+	} else {
 		Node* i;
-
-		for (i = head; i->link != NULL && priority > i->link->priority; i = i->link);
-
+		for (i = head; i->link != NULL; i = i->link)
+			if (priority > i->link->priority)
+				break;
 		insert_after(i, entry, priority);
 	}
 	++many_nodes;
@@ -63,17 +51,18 @@ PriorityQueue::Item PriorityQueue::get_front() {
 }
 
 void PriorityQueue::insert_front(const Item& entry, unsigned int priority) {
-	head = new Node();
-	head->data = entry;
-	head->priority = priority;
-	head->link = NULL;
+	Node* insert = new Node();
+	insert->link = head;
+	insert->data = entry;
+	insert->priority = priority;
+	head = insert;
 }
 
 void PriorityQueue::insert_after(Node* prev, const Item& entry, unsigned int priority) {
 	Node* insert = new Node();
+	insert->link = prev->link;
 	insert->data = entry;
 	insert->priority = priority;
-	insert->link = prev->link;
 	prev->link = insert;
 }
 

@@ -66,14 +66,8 @@ public:
 	size_t size() const {return many_nodes;}
 	bool is_empty() const {return head == NULL;}
 private:
-    // Note: head_ptr is the head pointer for a linked list that
-    // contains the items along with their priorities. These nodes are
-    // kept in order from highest priority (at the head of the list)
-    // to lowest priority (at the tail of the list). The private member
-    // variable, many_nodes, indicates how many nodes are on the list.
-    // The data type Node is completely defined below.
-    Node *head;
-    size_t many_nodes;
+    Node *head; /* Linked List: Highest priority at head, lowest at tail */
+    size_t many_nodes; /* How many nodes there are in the linked list */
 };
 
 struct Node { // Node for a linked list
