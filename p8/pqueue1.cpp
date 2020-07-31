@@ -1,5 +1,5 @@
 #include "pqueue1.h"
-#include <cassert>
+#include <cassert> // Provides assert()
 using namespace std;
 
 // CONSTRUCOR ans BIG THREE
@@ -31,9 +31,9 @@ void PriorityQueue::copy(const PriorityQueue& source) {
 
 // MODIFICATION MEMBER FUNCTION 
 void PriorityQueue::insert(const Item& entry, unsigned int priority) {
-	if (is_empty() || priority > head->priority) {
+	if (is_empty() || priority > head->priority)
 		insert_front(entry, priority);
-	} else {
+	else {
 		Node* i;
 		for (i = head; i->link != NULL; i = i->link)
 			if (priority > i->link->priority)
@@ -51,19 +51,11 @@ PriorityQueue::Item PriorityQueue::get_front() {
 }
 
 void PriorityQueue::insert_front(const Item& entry, unsigned int priority) {
-	Node* insert = new Node();
-	insert->link = head;
-	insert->data = entry;
-	insert->priority = priority;
-	head = insert;
+	head = new Node(entry, priority, head);
 }
 
 void PriorityQueue::insert_after(Node* prev, const Item& entry, unsigned int priority) {
-	Node* insert = new Node();
-	insert->link = prev->link;
-	insert->data = entry;
-	insert->priority = priority;
-	prev->link = insert;
+	prev->link = new Node(entry, priority, prev->link);
 }
 
 void PriorityQueue::remove_front() {

@@ -38,42 +38,51 @@
 #define PQUEUE_H
 #include <stdlib.h> // Provides size_t
 
-struct Node; // This will be completely defined below.
+struct Node; // Node structure for PQ with basic constructor
+
+/* NOTE: I added a few helper functions:
+ *   copy()  : Used in copy constructor and assignment operator
+ *   clear() : Used in deconstructor and assignment operator
+ *   insert_front() : Used in insert()
+ *   insert_after() : Used in insert()
+ *   remove_front() : Used in clear()
+ */
 
 class PriorityQueue {
 public:
     // TYPEDEF
     typedef int Item;
 
-    // CONSTRUCOR and BIG THREE
+    // CONSTRUCTOR and BIG THREE
     PriorityQueue();
     PriorityQueue(const PriorityQueue& source);
     ~PriorityQueue();
     void operator =(const PriorityQueue& source);
-    void copy(const PriorityQueue& source);
+    void copy(const PriorityQueue& source); // O(n): Copies items of one PQ to another
 
     // MODIFICATION MEMBER FUNCTION 
-    void insert(const Item& entry, unsigned int priority);
-    Item get_front();
+    void insert(const Item& entry, unsigned int priority); // O(n): Inserts item based on priority
+    Item get_front(); // O(1): Removes and returns first item
 
-    void insert_front(const Item& entry, unsigned int priority);
-    void insert_after(Node* prev, const Item& entry, unsigned int priority);
+    void insert_front(const Item& entry, unsigned int priority); // O(1): Inserts at the start of the PQ
+    void insert_after(Node* prev, const Item& entry, unsigned int priority); // O(1): Inserts after another item
 
-    void remove_front();
-    void clear();
+    void remove_front(); // O(1): Removes first item
+    void clear(); // O(n): Clears all the items in the PQ
 
     // CONSTANT MEMBER FUNCTIONS
-	size_t size() const {return many_nodes;}
-	bool is_empty() const {return head == NULL;}
+    size_t size() const {return many_nodes;}
+    bool is_empty() const {return head == NULL;}
 private:
-    Node *head; /* Linked List: Highest priority at head, lowest at tail */
-    size_t many_nodes; /* How many nodes there are in the linked list */
+    Node *head; // Linked List: Highest priority at head, lowest at tail
+    size_t many_nodes; // How many nodes there are in the linked list
 };
 
-struct Node { // Node for a linked list
-    PriorityQueue::Item data;
-    unsigned int priority;
-    Node *link;
+struct Node {
+    PriorityQueue::Item data; // Data value of node
+    unsigned int priority;    // Priority value of node used to sort PQ
+    Node *link;               // Pointer to the next node
+    Node(PriorityQueue::Item d = PriorityQueue::Item(), unsigned int p = 0, Node* l = NULL) : data(d), priority(p), link(l) {}
 };
 
 #endif
