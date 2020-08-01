@@ -35,9 +35,7 @@ void PriorityQueue::insert(const Item& entry, unsigned int priority) {
 		insert_front(entry, priority);
 	else {
 		Node* i;
-		for (i = head; i->link != NULL; i = i->link)
-			if (priority > i->link->priority)
-				break;
+		for (i = head; i->link != NULL && priority <= i->link->priority; i = i->link);
 		insert_after(i, entry, priority);
 	}
 	++many_nodes;
