@@ -67,33 +67,35 @@
 #ifndef MAIN_SAVITCH_SEQUENCE3_H
 #define MAIN_SAVITCH_SEQUENCE3_H
 #include <cstdlib>  // Provides size_t
-#include "node1.h"  // Provides node class
+#include "node2.h"  // Provides node class
 
-namespace main_savitch_5 {
+namespace main_savitch_6B {
+    template <class Item>
     class sequence {
     public:
         // TYPEDEFS and MEMBER CONSTANTS
-        typedef double value_type;
+        typedef Item value_type;
         typedef std::size_t size_type;
         // CONSTRUCTORS and DESTRUCTOR
         sequence();
-        sequence(const sequence& source); /* O(n): Copies items into new sequence */
+        sequence(const sequence<Item>& source); /* O(n): Copies items into new sequence */
         ~sequence(); /* O(n): Deletes each item one by one */
         // MODIFICATION MEMBER FUNCTIONS
         void start(); /* O(1): Puts cursor at the start of the sequence */
         void advance(); /* O(1): Advance cursor to next item */
         void insert(const value_type& entry); /* O(1): Places item before the cursor */
         void attach(const value_type& entry); /* O(1): Places at item after the cursor */
-        void operator =(const sequence& source); /* O(1): Removes the current item */
+        void operator =(const sequence<Item>& source); /* O(1): Removes the current item */
         void remove_current( ); /* O(n): Copies item into a sequence */
         // CONSTANT MEMBER FUNCTIONS
         size_type size() const {return many_nodes;}
         bool is_item() const {return cursor != NULL;}
         value_type current() const {return cursor->data();}
     private:
-    	node *head, *tail, *cursor, *precursor; /* First, Last, Current, and Previous Item of the sequence */
+    	node<Item> *head, *tail, *cursor, *precursor; /* First, Last, Current, and Previous Item of the sequence */
     	size_type many_nodes; /* Total number of nodes */
     };
 }
 
+#include "sequence4.template"
 #endif
