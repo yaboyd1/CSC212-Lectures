@@ -357,13 +357,6 @@ namespace main_savitch_4 {
 	std::istream& operator >> (std::istream& in, polynomial& p);
 	std::ostream& operator << (std::ostream& out, const polynomial& p);
 
-	void make_gif(
-		const polynomial& p,
-		const char filename[ ],
-		double low_x,
-		double high_x,
-		double low_y,
-		double high_y
-		);
+	void make_gif(const polynomial& p, const char filename[], double low_x = -10, double high_x = 10, double low_y = -10, double high_y = 10);
 }
 #endif

@@ -200,11 +200,9 @@ namespace main_savitch_4 {
 
 	// NON-MEMBER BINARY OPERATORS
 	polynomial operator +(const polynomial& p1, const polynomial& p2) {
-		if (p1.degree() == 0) return p2;
-		if (p2.degree() == 0) return p1;
-		polynomial sum(p1.coefficient(0) + p2.coefficient(0), 0);
-		sum.reserve(p1.degree() > p2.degree() ? p1.degree() + 1 : p2.degree() + 1);
-		for(unsigned int i = p1.next_term(0); i != 0; i = p1.next_term(i)) sum.add_to_coef(p1.coefficient(i), i);
+		polynomial sum = p1;
+		sum.reserve(p2.degree() + 1);
+		sum.add_to_coef(p2.coefficient(0), 0);
 		for(unsigned int i = p2.next_term(0); i != 0; i = p2.next_term(i)) sum.add_to_coef(p2.coefficient(i), i);
 		return sum;
 	}
@@ -216,11 +214,9 @@ namespace main_savitch_4 {
 	}
 
 	polynomial operator -(const polynomial& p1, const polynomial& p2) {
-		if (p1.degree() == 0) return p2;
-		if (p2.degree() == 0) return p1;
-		polynomial difference(p1.coefficient(0) - p2.coefficient(0), 0);
-		difference.reserve(p1.degree() > p2.degree() ? p1.degree() + 1 : p2.degree() + 1);
-		for(unsigned int i = p1.next_term(0); i != 0; i = p1.next_term(i)) difference.add_to_coef(p1.coefficient(i), i);
+		polynomial difference = p1;
+		difference.reserve(p2.degree() + 1);
+		difference.add_to_coef(-p2.coefficient(0), 0);
 		for(unsigned int i = p2.next_term(0); i != 0; i = p2.next_term(i)) difference.add_to_coef(-p2.coefficient(i), i);
 		return difference;
 	}
@@ -267,13 +263,4 @@ namespace main_savitch_4 {
 		}
 		return out << endl;
 	}
-
-	void make_gif(
-		const polynomial& p,
-		const char filename[ ],
-		double low_x,
-		double high_x,
-		double low_y,
-		double high_y
-		);
 }

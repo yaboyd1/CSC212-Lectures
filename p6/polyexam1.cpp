@@ -467,14 +467,13 @@ double run_a_test(int number, const char message[], double test_function( ), int
     return result;
 }
 
-
 // **************************************************************************
-// int main( )
+// int main()
 //   The main program calls all tests and prints the sum of all points
 //   earned from the tests.
 // **************************************************************************
-int main( )
-{
+
+int main() {
     double sum = 0;
     
     cout << "Running " << DESCRIPTION[0] << endl;
