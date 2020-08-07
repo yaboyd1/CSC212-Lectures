@@ -22,3 +22,6 @@
 5. [Recursion](/p5/)
 6. [Dynamic Polynomial](/p6/)
 7. [Linked List Sequence](/p7/)
+8. [Priority Queue](/p8/)
+9. [Template Sequence](/p9/)
+10. [BST Bag](/p10/)
