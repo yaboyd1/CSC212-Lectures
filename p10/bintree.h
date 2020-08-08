@@ -119,8 +119,8 @@ namespace main_savitch_10 {
 
 		// MODIFICATION MEMBER FUNCTIONS
 		Item& data() { return data_field; }
-		binary_tree_node* left() { return left_field; }
-		binary_tree_node* right() { return right_field; }
+		binary_tree_node*& left() { return left_field; }
+		binary_tree_node*& right() { return right_field; }
 		void set_data(const Item& new_data) { data_field = new_data; }
 		void set_left(binary_tree_node* new_left) { left_field = new_left; }
 		void set_right(binary_tree_node* new_right) { right_field = new_right; }
