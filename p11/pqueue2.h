@@ -44,39 +44,44 @@
 #define PQUEUE_H
 #include <stdlib.h> // Provides size_t
 
-    class PriorityQueue
-    {
-    public:
-        // TYPEDEF and MEMBER CONSTANT
-        typedef int Item;
-        static const size_t CAPACITY = 5000;
-        // CONSTRUCTOR
-        PriorityQueue( );
-        // MODIFICATION MEMBER FUNCTIONS
-        void insert(const Item& entry, unsigned int priority);
-        Item get_front( );
-        // CONSTANT MEMBER FUNCTIONS
-        size_t size( ) const { return many_items; }
-        bool is_empty( ) const { return (many_items == 0); }
-        // TEMPORARY MEMBER FUNCTION FOR DEBUGGING (REMOVE BEFORE SUBMITTING)
-        void print_tree(const char message[ ] = "", size_t i = 0) const;
-    private:
-        // STRUCT DEFINITION to store information about one item in the pqueue
-        struct OneItemInfo
-        {
-            Item data;
-            unsigned int priority;
-        };
-        // PRIVATE MEMBER VARIABLES
-        OneItemInfo heap[CAPACITY];
-        size_t many_items;
-        // PRIVATE HELPER FUNCTIONS -- see pqueue2.cxx for documentation
-        bool is_leaf(size_t i) const;
-        size_t parent_index(size_t i) const;
-        unsigned int parent_priority(size_t i) const;
-        size_t big_child_index(size_t i) const;
-        unsigned int big_child_priority(size_t i) const;
-        void swap_with_parent(size_t i);
-    };
+class PriorityQueue {
+public:
+	// TYPEDEF and MEMBER CONSTANT
+	typedef int Item;
+	static const size_t CAPACITY = 5000; 
+
+	// CONSTRUCTOR
+	PriorityQueue();
+
+	// MODIFICATION MEMBER FUNCTIONS
+	void insert(const Item& entry, unsigned int priority); // O(log n): Inserts an item into heap based on priority
+	Item get_front(); // O(log n): Removes and returns root or first item the of heap
+
+	// CONSTANT MEMBER FUNCTIONS
+	size_t size() const { return many_items; }
+	bool is_empty() const { return (many_items == 0); }
+
+	// TEMPORARY MEMBER FUNCTION FOR DEBUGGING (REMOVE BEFORE SUBMITTING)
+	void print_tree(const char message[] = "", size_t i = 0) const;
+private:
+	// STRUCT DEFINITION to store information about one item in the pqueue
+	struct OneItemInfo {
+		Item data;
+		unsigned int priority;
+		OneItemInfo(const Item& d = Item(), const unsigned int& p = 0) : data(d), priority(p) {}
+	};
+
+	// PRIVATE MEMBER VARIABLES
+	OneItemInfo heap[CAPACITY]; // Fixed size array used to represent heap
+	size_t many_items; // How much of the array is being used
+
+	// PRIVATE HELPER FUNCTIONS -- see pqueue2.cxx for documentation
+	bool is_leaf(size_t i) const;
+	size_t parent_index(size_t i) const;
+	unsigned int parent_priority(size_t i) const;
+	size_t big_child_index(size_t i) const;
+	unsigned int big_child_priority(size_t i) const;
+	void swap_with_parent(size_t i);
+};
 
 #endif
