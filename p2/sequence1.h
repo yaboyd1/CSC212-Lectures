@@ -93,7 +93,7 @@ namespace main_savitch_3
         bool is_item() const;
         value_type current() const;
     private:
-        value_type data[CAPACITY];  /* Fixed size array that holds the conetents of the sequence */
+        value_type data[CAPACITY];  /* Fixed size array that holds the contents of the sequence */
         size_type used;             /* Size of the array or how much of the array is used */
         size_type current_index;    /* The current item */
     };

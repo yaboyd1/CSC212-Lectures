@@ -1,0 +1,43 @@
+#include <cstdlib>
+#include "node2.h" // Provides Linked List Toolkit
+#include "table2.h"
+using namespace std;
+using namespace main_savitch_6B;
+
+namespace main_savitch_12B {
+	template <class RecordType>
+	class table {
+	public:
+		// MEMBER CONSTANT -- See Appendix E if this fails to compile.
+		static const std::size_t TABLE_SIZE = 811;
+
+		// CONSTRUCTORS AND DESTRUCTOR
+		table() {
+			data = new main_savitch_6B::node<RecordType>[TABLE_SIZE];
+			total_records = 0;
+		}
+
+		table(const table& source) {
+			for (size_t i = 0; i < TABLE_SIZE; ++i)
+				data[i] = source.data[i];
+			total_records = source.total_records;
+		}
+		~table();
+
+		// MODIFICATION MEMBER FUNCTIONS
+		void insert(const RecordType& entry);
+		void remove(int key);
+		void operator =(const table& source);
+
+		// CONSTANT MEMBER FUNCTIONS
+		void find(int key, bool& found, RecordType& result) const;
+		bool is_present(int key) const;
+		std::size_t size( ) const { return total_records; }
+	private:
+		main_savitch_6B::node<RecordType> *data[TABLE_SIZE];
+		std::size_t total_records;
+		
+		// HELPER MEMBER FUNCTION
+		std::size_t hash(int key) const;
+	};
+}
